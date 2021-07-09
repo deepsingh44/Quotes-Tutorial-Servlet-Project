@@ -1,0 +1,3 @@
+mysql> create quotesdb;
+
+CREATE TABLE quotes (id int NOT NULL AUTO_INCREMENT,title varchar(35) NOT NULL,description varchar(50),image varchar(30),PRIMARY KEY (id));

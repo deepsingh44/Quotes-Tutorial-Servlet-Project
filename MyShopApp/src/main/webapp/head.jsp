@@ -23,6 +23,7 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="add.jsp">Add Quotes</a></li>
+				<li class="active"><a href="quotes?opt=5">List Quotes</a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

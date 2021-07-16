@@ -26,7 +26,13 @@
 							<td>${quotes.description}</td>
 							<td><img src="images/${quotes.image}" width="50" height="50"></td>
 							<td><button class="btn btn-primary">Edit</button></td>
-							<td><button class="btn btn-danger">Delete</button></td>
+							<td>
+								<form action="quotes">
+									<input type="hidden" value="2" name="opt"> <input
+										type="hidden" value="${quotes.id}" name="id"> <input
+										type="submit" class="btn btn-danger" value="Delete">
+								</form>
+							</td>
 						</tr>
 					</tbody>
 

@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="p"%>
 <head>
 <title>Quotes Tutorial</title>
 <meta charset="utf-8">
@@ -21,17 +22,30 @@
 			<a class="navbar-brand" href="#">Quotes Tutorial</a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="add.jsp">Add Quotes</a></li>
-				<li class="active"><a href="quotes?opt=5">List Quotes</a></li>
+			<p:choose>
+				<p:when test="${sessionScope.user !=null}">
+					<ul class="nav navbar-nav">
 
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-user"></span>
-						Sign Up</a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
-			</ul>
+						<li class="active"><a href="add.jsp">Add Quotes</a></li>
+						<li class="active"><a href="quotes?opt=5">List Quotes</a></li>
+						<li class="active"><a href="users?opt=3">Logout</a></li>
+					</ul>
+
+				</p:when>
+
+
+
+
+
+				<p:otherwise>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="register.jsp"><span class="glyphicon glyphicon-user"></span>
+								Sign Up</a></li>
+						<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>
+								Login</a></li>
+					</ul>
+				</p:otherwise>
+			</p:choose>
 		</div>
 	</div>
 </nav>

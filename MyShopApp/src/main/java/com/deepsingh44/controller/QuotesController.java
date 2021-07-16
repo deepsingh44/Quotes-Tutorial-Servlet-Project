@@ -37,6 +37,7 @@ public class QuotesController extends HttpServlet {
 	private void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		String opt = req.getParameter("opt");
+		System.out.println("Opt : " + opt);
 		if (opt != null) {
 			int choice = Integer.parseInt(opt);
 			switch (choice) {
@@ -77,9 +78,11 @@ public class QuotesController extends HttpServlet {
 
 	}
 
-	private void deleteQuotes(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
-
+	private void deleteQuotes(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		String id = req.getParameter("id");
+		System.out.println("ID : " + id);
+		int i = QuotesDao.getQuotesDao().delete(Integer.parseInt(id));
+		getAllQuotes(req, resp);
 	}
 
 	private void insertQuotes(HttpServletRequest req, HttpServletResponse resp) {

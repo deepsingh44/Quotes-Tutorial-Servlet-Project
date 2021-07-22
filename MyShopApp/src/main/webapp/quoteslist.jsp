@@ -25,7 +25,16 @@
 							<td>${quotes.title}</td>
 							<td>${quotes.description}</td>
 							<td><img src="images/${quotes.image}" width="50" height="50"></td>
-							<td><button class="btn btn-primary">Edit</button></td>
+							<td>
+								<form action="update.jsp" method="post">
+									<input type="hidden" value="${quotes.id}" name="id"> 
+									<input type="hidden" value="${quotes.title}" name="title">
+									<input type="hidden" value="${quotes.description}" name="description">
+									<input type="hidden" value="${quotes.image}" name="image">
+									<input
+										type="submit" class="btn btn-danger" value="Edit">
+								</form>
+							</td>
 							<td>
 								<form action="quotes">
 									<input type="hidden" value="2" name="opt"> <input

@@ -74,7 +74,67 @@ public class QuotesController extends HttpServlet {
 	}
 
 	private void updateQuotes(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+
+		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+		diskFileItemFactory.setRepository(new File("E://"));
+		Quotes quotes = new Quotes();
+		boolean status = ServletFileUpload.isMultipartContent(req);
+		FileOutputStream fo=null;
+		if (status) {
+			ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
+			try {
+				List<FileItem> items = upload.parseRequest(req);
+				Iterator<FileItem> it = items.iterator();
+				while (it.hasNext()) {
+					FileItem item = it.next();
+
+					if (item.isFormField()) {
+						if (item.getFieldName().equalsIgnoreCase("title")) {
+							quotes.setTitle(item.getString());
+						}
+						if (item.getFieldName().equalsIgnoreCase("id")) {
+							quotes.setId(Integer.parseInt(item.getString()));
+						}
+						if (item.getFieldName().equalsIgnoreCase("desc")) {
+							quotes.setDescription(item.getString());
+						}
+					} else {
+
+						String root = req.getServletContext().getRealPath("/");
+						File folder = new File(root, "images");
+						if (!folder.exists())
+							folder.mkdir();
+
+						File fileDetail = File.createTempFile("quotes", ".jpg", folder);
+						fo= new FileOutputStream(fileDetail.getAbsolutePath());
+						fo.write(item.get());
+						fo.close();
+						quotes.setImage(fileDetail.getName());
+						System.out.println(fileDetail.getAbsolutePath());
+
+					}
+				}
+
+				Quotes q = QuotesDao.getQuotesDao().getQuotesById(quotes.getId());
+
+				if (q != null) {
+					int i = QuotesDao.getQuotesDao().update(quotes);
+					if (i > 0) {
+						resp.getWriter().print("Successfully Quotes Update");
+					} else {
+						resp.getWriter().print("Quotes Updated Failed");
+					}
+
+				} else {
+					resp.getWriter().print("Sorry This Id is not exist");
+				}
+				req.getRequestDispatcher("index.jsp").include(req, resp);
+
+			} catch (Exception e) {
+				Logger.getAnonymousLogger().log(Level.WARNING, e.toString());
+			}
+
+		}
 
 	}
 

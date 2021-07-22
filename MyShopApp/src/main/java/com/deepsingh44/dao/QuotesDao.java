@@ -65,6 +65,25 @@ public class QuotesDao {
 		}
 		return quotes;
 	}
+	
+	public Quotes getQuotesById(int id) {
+		Quotes quotes = null;
+		try (Connection con = Dao.getConnection();) {
+			PreparedStatement ps = con.prepareStatement("SELECT * from quotes WHERE id=?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				quotes = new Quotes();
+				quotes.setId(rs.getInt(1));
+				quotes.setTitle(rs.getString(2));
+				quotes.setDescription(rs.getString(3));
+				quotes.setImage(rs.getString(4));
+			}
+		} catch (Exception e) {
+			Logger.getAnonymousLogger().log(Level.WARNING, e.toString());
+		}
+		return quotes;
+	}
 
 	public int update(Quotes quotes) {
 		int i = 0;
